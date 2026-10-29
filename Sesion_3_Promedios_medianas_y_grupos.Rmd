@@ -457,7 +457,7 @@ Una decisión bien fundamentada tiene cuatro partes:
 
 Antes de calcular nada: ¿crees que el analista tiene razón? Escribe una frase.
 
-*Mi respuesta:*
+*Mi respuesta:* No
 
 ## Paso 2. Comprueba lo que dice el analista
 
@@ -477,13 +477,13 @@ arrange (desc (mediana))
 Primero, guarda solo a los mariscales en un objeto (quita los `#`):
 
 ```{r}
-sum (qb$career_av == 0)
+qb <- base %>% filter(simple_pos == "QB")
 ```
 
 **a) ¿Qué pasa con la mediana?** Compara la mediana de los mariscales con la de las demás posiciones. Pista: el código de la sección 5.
 
 ```{r}
-i
+median(qb$career_av)
 ```
 
 **b) ¿Cuántos mariscales se quedaron en 0?** Pista: `sum(qb$career_av == 0)`.
@@ -495,21 +495,20 @@ sum (qb$career_av == 0)
 **c) ¿Importa en qué ronda se elige al mariscal?** Separa a los mariscales elegidos en la primera ronda de los demás y compara sus medianas. Completa los `___` y quita los `#`:
 
 ```{r}
-ab_primera <- qb %>% filter (draft_round == 1)
-qb_resto
-<- qb %>% filter (draft_round > 1)
-median (qb_primerascareer_av)
-median(qb_restoscareer_av)
+qb_primeras <- qb %>% filter(draft_round == 1)
+  qb_resto    <- qb %>% filter(draft_round > 1)
+  median(qb_primeras$career_av)
+  median(qb_resto$career_av)
 ```
 
 ## Paso 4. Decide y fundamenta
 
 Responde al analista con las cuatro partes. Usa **tus** números de los pasos 2 y 3.
 
-- **Decisión:**
-- **Evidencia:**
-- **Razonamiento:**
-- **Límite:**
+- **Decisión:**No seguiría la propuesta tal cual. Que los mariscales tengan el mejor promedio no basta para gastar en ellos las primeras selecciones. Solo elegiría un mariscal en primera ronda, no en rondas posteriores.
+- **Evidencia:**Su promedio es el más alto (23.5), pero casi empata con los linieros ofensivos (23.0). Su mediana es 4, de las más bajas. 56 de 170 mariscales (33%) terminaron en 0. Los de primera ronda tienen mediana de 44; los demás, de 1.
+- **Razonamiento:**Unas pocas estrellas inflan el promedio, y la mediana muestra que el mariscal típico rinde poco. La gran diferencia no está entre posiciones sino entre rondas: un mariscal elegido temprano vale mucho más que uno elegido tarde. Por eso el promedio por posición engaña.
+- **Límite:**Solo hay 39 mariscales de primera ronda, una muestra chica. No sé si el equipo busca el valor total del draft (donde el promedio sí sirve) o al jugador típico, ni si esos mariscales de primera ronda ya eran de los mejores prospectos. Cambiaría de opinión con más años de datos o si el director me dice que busca valor total.
 
 **Para entregar:** en RStudio, botón **Knit** para comprobar que todo se ejecuta. Después, en GitHub, entra a tu repositorio, abre la carpeta `sesion-3`, **Add file > Upload files**, sube `sesion3_trabajo.Rmd` y escribe un mensaje como *Agregar trabajo de la sesión 3*.
 
